@@ -2,7 +2,7 @@ import {WebSocket} from "ws";
 import { INIT_GAME, MOVE} from "./messages";
 import { Game } from './Game'; 
 ///user ,Game and 
-export interface Game{
+export interface Games{
     makeMove(socket: WebSocket, move: any): unknown;
     id:number;
     name:string;
@@ -52,10 +52,12 @@ export class GameManager{
             }
             if(message.type==MOVE)
             {
+                console.log("Inside move");
                 const game=this.games.find(game=>game.player1===socket||game.player2 ===socket)
                 if(game)
                 {
-                    game.makeMove(socket, message.move);
+                    console.log("Inside make move");
+                    game.makeMove(socket, message.payload.move);
                 }
             }
         })
